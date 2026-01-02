@@ -7,6 +7,7 @@ class GmailImapService
   end
 
   def list_emails(limit: 5)
+    emails = []
     imap = Net::IMAP.new("imap.gmail.com", 993, true)
     imap.login(@email, @password)
     imap.select("INBOX")
@@ -15,15 +16,17 @@ class GmailImapService
 
     ids.each do |id|
       envelope = imap.fetch(id, "ENVELOPE")[0].attr["ENVELOPE"]
-      puts "ID: #{id}"
-      puts "From: #{envelope.from[0].mailbox}@#{envelope.from[0].host}"
-      puts "Subject: #{envelope.subject}"
-      puts "Date: #{envelope.date}"
-      puts "---------------------------"
+      emails << {
+        id: id,
+        from: "#{envelope.from[0].mailbox}@#{envelope.from[0].host}",
+        subject: envelope.subject,
+        date: envelope.date
+      }
     end
 
     imap.logout
     imap.disconnect
+    emails
   end
 
   def delete_email(id)
