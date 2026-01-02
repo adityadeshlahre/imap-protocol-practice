@@ -1,4 +1,5 @@
 require "net/imap"
+
 class GmailImapService
   def initialize
     @email = Rails.application.credentials.dig(:gmail, :email)

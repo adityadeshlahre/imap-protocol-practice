@@ -1,0 +1,38 @@
+<h1>Your Gmail Inbox</h1>
+
+<% if flash[:alert] %>
+  <div style="color: red; margin-bottom: 20px;">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<% if @emails.any? %>
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr style="background-color: #f5f5f5;">
+        <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">ID</th>
+        <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">From</th>
+        <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Subject</th>
+        <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @emails.each do |email| %>
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ddd;"><%= email[:id] %></td>
+          <td style="padding: 10px; border: 1px solid #ddd;"><%= email[:from] %></td>
+          <td style="padding: 10px; border: 1px solid #ddd;"><%= email[:subject] %></td>
+          <td style="padding: 10px; border: 1px solid #ddd;"><%= email[:date] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No emails found or unable to connect to Gmail.</p>
+<% end %>
+
+<div style="margin-top: 20px;">
+  <p><strong>Note:</strong> Make sure you've configured your Gmail credentials using:</p>
+  <code>rails credentials:edit</code>
+  <p>And added your Gmail app password under gmail: email and gmail: app_password</p>
+</div>
