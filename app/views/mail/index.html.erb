@@ -1,9 +1,11 @@
 <h1>Your Gmail Inbox</h1>
 
+<% if flash[:notice] %>
+  <div style="color: green;"><%= flash[:notice] %></div>
+<% end %>
+
 <% if flash[:alert] %>
-  <div style="color: red; margin-bottom: 20px;">
-    <%= flash[:alert] %>
-  </div>
+  <div style="color: red;"><%= flash[:alert] %></div>
 <% end %>
 
 <% if @emails.any? %>
